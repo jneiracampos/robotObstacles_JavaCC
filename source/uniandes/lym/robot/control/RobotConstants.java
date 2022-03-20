@@ -11,23 +11,51 @@ public interface RobotConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int T_MOVER = 4;
+  int T_MOVE = 5;
   /** RegularExpression Id. */
-  int T_TURNRIGHT = 5;
+  int T_TURNRIGHT = 6;
   /** RegularExpression Id. */
-  int T_PONER = 6;
+  int T_PUT = 7;
   /** RegularExpression Id. */
-  int T_RECOGER = 7;
+  int T_PICK = 8;
   /** RegularExpression Id. */
-  int T_POP = 8;
+  int T_POP = 9;
   /** RegularExpression Id. */
-  int T_BALLOONS = 9;
+  int T_SKIP = 10;
   /** RegularExpression Id. */
-  int T_CHIPS = 10;
+  int STRUCTURE = 11;
   /** RegularExpression Id. */
-  int NUMERO = 11;
+  int DEFVAR = 12;
   /** RegularExpression Id. */
-  int DIGIT = 12;
+  int DEFUN = 13;
+  /** RegularExpression Id. */
+  int TURN = 14;
+  /** RegularExpression Id. */
+  int FACE = 15;
+  /** RegularExpression Id. */
+  int MOVE_DIR = 16;
+  /** RegularExpression Id. */
+  int RUN_DIRS = 17;
+  /** RegularExpression Id. */
+  int MOVE_FACE = 18;
+  /** RegularExpression Id. */
+  int TURN_TO = 19;
+  /** RegularExpression Id. */
+  int FACE_TO = 20;
+  /** RegularExpression Id. */
+  int DIR = 21;
+  /** RegularExpression Id. */
+  int T_BALLOONS = 22;
+  /** RegularExpression Id. */
+  int T_CHIPS = 23;
+  /** RegularExpression Id. */
+  int NUMERO = 24;
+  /** RegularExpression Id. */
+  int WORD = 25;
+  /** RegularExpression Id. */
+  int DIGIT = 26;
+  /** RegularExpression Id. */
+  int LETTER = 27;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -38,19 +66,33 @@ public interface RobotConstants {
     "\" \"",
     "\"\\r\"",
     "\"\\t\"",
-    "\"Move\"",
-    "\"TURNRIGHT\"",
-    "\"Put\"",
-    "\"Pick\"",
-    "\"Pop\"",
-    "\"BALLOONS\"",
-    "\"CHIPS\"",
+    "\"\\n\"",
+    "\"move\"",
+    "\"turnright\"",
+    "\"put\"",
+    "\"pick\"",
+    "\"pop\"",
+    "\"skip\"",
+    "<STRUCTURE>",
+    "\"defvar\"",
+    "\"defun\"",
+    "\"turn\"",
+    "\"face\"",
+    "\"move-dir\"",
+    "\"run-dirs\"",
+    "\"move_face\"",
+    "<TURN_TO>",
+    "<FACE_TO>",
+    "<DIR>",
+    "\"ballons\"",
+    "\"chips\"",
     "<NUMERO>",
+    "<WORD>",
     "<DIGIT>",
+    "<LETTER>",
     "\"(\"",
     "\")\"",
-    "\"\\n\"",
-    "\",\"",
+    "\":\"",
   };
 
 }

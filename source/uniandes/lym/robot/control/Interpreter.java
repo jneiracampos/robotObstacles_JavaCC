@@ -84,7 +84,7 @@ public class Interpreter   {
 
 		// mundo.resetStacks();
 		try {                  		
-			while (parser.command(salida)){
+			while (parser.inicio(salida)){
 				//mundo.resetStacks();	
 				salida.append(" \n--> ");
 			}

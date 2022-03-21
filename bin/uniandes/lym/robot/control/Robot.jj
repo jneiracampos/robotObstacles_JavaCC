@@ -16,6 +16,7 @@ import java.awt.Point;
 import java.io.*;
 import java.util.Vector;
 import java.util.LinkedList;
+import java.util.HashMap;
 
 @SuppressWarnings("serial")
 public class Robot 
@@ -55,12 +56,17 @@ TOKEN: /* Nombres de Comandos */
 		| 	< DEFUN: "defun" >
 		| 	< TURN: "turn" >
 		| 	< FACE: "face" >
+		|   < GO_END: "goend" >
 		| 	< MOVE_DIR: "move-dir" >
 		| 	< RUN_DIRS: "run-dirs" >
 		| 	< MOVE_FACE: "move_face" >
-		| 	< TURN_TO: "left" | "right" | "around" >
+		| 	< FACING_P: "facing-p" >
+		| 	< CAN_PUT_P: "can-put-p" > 
+		|	< CAN_PICK_P: "can-pick-p" >
+		| 	< CAN_MOVE_P: "can-move-p" >
+		| 	< BLOCKED_P: "blocked-p" >
 		| 	< FACE_TO: "north" | "east" | "south" | "west" >
-		|	< DIR: "front" | "right" | "left" | "back" >
+		|	< DIR: "front" | "right" | "left" | "back" | "around" >
 }
 
 TOKEN:
@@ -83,9 +89,8 @@ TOKEN:
 	}
 	{
 	  (
-	    "(" (command() | instruction())+ ")"
-	  | 
-	  )
+	    block()
+	  )+
 
 	{
 	  sistema.append(salida);
@@ -94,6 +99,12 @@ TOKEN:
 	
 	|	<EOF> {return false;}
 	
+	}
+
+	void block():
+	{}
+	{
+	  "(" (one_line() | if_conditional() | loop_conditional() | repeat() | defun()| conditional()) ")"
 	}
 
 	void command():
@@ -110,19 +121,56 @@ TOKEN:
 	  )
 	}
 
-	void instruction() :
+	void instruction():
 	{}
 	{
 	  (
 	    < DEFVAR > < WORD > < NUMERO >
-	  | < TURN > ":" < TURN_TO >
+	  | < TURN > ":" < DIR >
 	  | < FACE > ":" < FACE_TO >
 	  | < MOVE_DIR > ":" < DIR >
-	  | < RUN_DIRS > ":" (< DIR >)+
+	  | < RUN_DIRS > "(" (":" < DIR >)+ ")"
 	  | < MOVE_FACE > < NUMERO > ":" < FACE_TO >
+	  | < GO_END >
 	  | < T_SKIP >
-	  )	} 
-	  
+	  )	}
+
+	void conditional():
+	{}
+	{
+	  (< NOT >)? (< BLOCKED_P > | < FACING_P > | < CAN_PUT_P > | < CAN_PICK_P > | < CAN_MOVE_P >)?
+	}
+
+	void one_line():
+	{}
+	{
+	  (command() | instruction())
+	}
+	
+	void if_conditional():
+	{}
+	{
+	  < IF > "(" conditional() ")" (block())+
+	}
+
+	void loop_conditional():
+	{}
+	{
+	  < LOOP > "(" conditional() ")" (block())+
+	}
+
+	void repeat():
+	{}
+	{
+	  < REPEAT > < NUMERO > (block())+
+	}
+
+	void defun():
+	{}
+	{
+	  < DEFUN > < WORD > "(" (< WORD > | < NUMERO >)* ")" (block())+
+	}
+	
 	void put() :
 	{
 		int f=1;	
@@ -130,7 +178,8 @@ TOKEN:
 	{
 	  (
 	    ( <T_CHIPS> f=numero() {world.putChips(f); salida = "Command:  Put Chips"; })
-	  | ( <T_BALLOONS> f=numero() {world.putBalloons(f); salida = "Command:  Put Balloons";})	  )
+	  | ( <T_BALLOONS> f=numero() {world.putBalloons(f); salida = "Command:  Put Balloons";})
+	  )
 	}
 
 	void pick():

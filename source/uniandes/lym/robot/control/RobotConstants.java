@@ -23,39 +23,55 @@ public interface RobotConstants {
   /** RegularExpression Id. */
   int T_SKIP = 10;
   /** RegularExpression Id. */
-  int STRUCTURE = 11;
+  int IF = 11;
   /** RegularExpression Id. */
-  int DEFVAR = 12;
+  int LOOP = 12;
   /** RegularExpression Id. */
-  int DEFUN = 13;
+  int REPEAT = 13;
   /** RegularExpression Id. */
-  int TURN = 14;
+  int NOT = 14;
   /** RegularExpression Id. */
-  int FACE = 15;
+  int DEFVAR = 15;
   /** RegularExpression Id. */
-  int MOVE_DIR = 16;
+  int DEFUN = 16;
   /** RegularExpression Id. */
-  int RUN_DIRS = 17;
+  int TURN = 17;
   /** RegularExpression Id. */
-  int MOVE_FACE = 18;
+  int FACE = 18;
   /** RegularExpression Id. */
-  int TURN_TO = 19;
+  int GO_END = 19;
   /** RegularExpression Id. */
-  int FACE_TO = 20;
+  int MOVE_DIR = 20;
   /** RegularExpression Id. */
-  int DIR = 21;
+  int RUN_DIRS = 21;
   /** RegularExpression Id. */
-  int T_BALLOONS = 22;
+  int MOVE_FACE = 22;
   /** RegularExpression Id. */
-  int T_CHIPS = 23;
+  int FACING_P = 23;
   /** RegularExpression Id. */
-  int NUMERO = 24;
+  int CAN_PUT_P = 24;
   /** RegularExpression Id. */
-  int WORD = 25;
+  int CAN_PICK_P = 25;
   /** RegularExpression Id. */
-  int DIGIT = 26;
+  int CAN_MOVE_P = 26;
   /** RegularExpression Id. */
-  int LETTER = 27;
+  int BLOCKED_P = 27;
+  /** RegularExpression Id. */
+  int FACE_TO = 28;
+  /** RegularExpression Id. */
+  int DIR = 29;
+  /** RegularExpression Id. */
+  int T_BALLOONS = 30;
+  /** RegularExpression Id. */
+  int T_CHIPS = 31;
+  /** RegularExpression Id. */
+  int NUMERO = 32;
+  /** RegularExpression Id. */
+  int WORD = 33;
+  /** RegularExpression Id. */
+  int DIGIT = 34;
+  /** RegularExpression Id. */
+  int LETTER = 35;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -73,15 +89,23 @@ public interface RobotConstants {
     "\"pick\"",
     "\"pop\"",
     "\"skip\"",
-    "<STRUCTURE>",
+    "\"if\"",
+    "\"loop\"",
+    "\"repeat\"",
+    "\"not\"",
     "\"defvar\"",
     "\"defun\"",
     "\"turn\"",
     "\"face\"",
+    "\"goend\"",
     "\"move-dir\"",
     "\"run-dirs\"",
     "\"move_face\"",
-    "<TURN_TO>",
+    "\"facing-p\"",
+    "\"can-put-p\"",
+    "\"can-pick-p\"",
+    "\"can-move-p\"",
+    "\"blocked-p\"",
     "<FACE_TO>",
     "<DIR>",
     "\"ballons\"",

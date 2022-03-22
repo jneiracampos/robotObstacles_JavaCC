@@ -29,6 +29,8 @@ public class Robot
 	}
 
 	String salida=new String();
+	public static HashMap< String, Integer > variables = new HashMap< String, Integer >();
+	public static LinkedList< String > metodos = new LinkedList< String >();
 }
 PARSER_END(Robot)
 
@@ -56,7 +58,7 @@ TOKEN: /* Nombres de Comandos */
 		| 	< DEFUN: "defun" >
 		| 	< TURN: "turn" >
 		| 	< FACE: "face" >
-		|   < GO_END: "goend" >
+		|   < EQUALS: "=" >
 		| 	< MOVE_DIR: "move-dir" >
 		| 	< RUN_DIRS: "run-dirs" >
 		| 	< MOVE_FACE: "move_face" >
@@ -104,16 +106,24 @@ TOKEN:
 	void block():
 	{}
 	{
-	  "(" (one_line() | if_conditional() | loop_conditional() | repeat() | defun()| conditional()) ")"
+	  (	    ("(")+ (one_line() | if_conditional() | loop_conditional() | repeat() | defun() | conditional()) (")")+
+	  )
 	}
 
+	void auxiliar():
+	{}
+	{	  (
+	    ("(")+ (one_line() | if_conditional() | loop_conditional() | repeat() | defun() | conditional()) ")"
+	  )
+    }	  
 	void command():
 	{
 	  int x;
+	  String name;
 	}
 	{
 	  (
-	    < T_MOVE > x=numero() {world.moveForward(x);salida = "Command: Moveforward";}
+	    < T_MOVE > (x=numero() {world.moveForward(x); salida = "Command: Moveforward";} | name=< WORD >.image {try {x=variables.get(name);world.moveForward(x); salida = "Command: Moveforward";} catch (Exception e) {salida = "Esta variable no se encuentra definida";}})
 	  | < T_TURNRIGHT > "(" ")" {world.turnRight();salida = "Command: Turnright";}
 	  | < T_POP > "(" x=numero() ")" {world.popBalloons(x); salida = "Command: Pop";}
 	  | < T_PUT > ":"  put()
@@ -122,74 +132,91 @@ TOKEN:
 	}
 
 	void instruction():
-	{}
+	{
+	  int x;
+	  String name;
+	}
 	{
 	  (
-	    < DEFVAR > < WORD > < NUMERO >
+	    < DEFVAR > name=< WORD >.image x=numero() {variables.put(name, x);}
+	  | < EQUALS > name=< WORD >.image x=numero() {variables.replace(name, x);}
 	  | < TURN > ":" < DIR >
 	  | < FACE > ":" < FACE_TO >
-	  | < MOVE_DIR > ":" < DIR >
+	  | < MOVE_DIR > (x=numero() | name=< WORD >.image {x=variables.get(name);}) ":" < DIR >
 	  | < RUN_DIRS > "(" (":" < DIR >)+ ")"
-	  | < MOVE_FACE > < NUMERO > ":" < FACE_TO >
-	  | < GO_END >
+	  | < MOVE_FACE > (x=numero() | name=< WORD >.image {x=variables.get(name);}) ":" < FACE_TO >
 	  | < T_SKIP >
+	  | (name=< WORD >.image {if (variables.containsKey(name)) { } else {salida = "Esta variable no se encuentra definida";}})
 	  )	}
-
-	void conditional():
-	{}
-	{
-	  (< NOT >)? (< BLOCKED_P > | < FACING_P > | < CAN_PUT_P > | < CAN_PICK_P > | < CAN_MOVE_P >)?
-	}
 
 	void one_line():
 	{}
 	{
-	  (command() | instruction())
+	  (	    (command() | instruction())
+	  )
+	}
+
+	void conditional():
+	{}
+	{
+	  (	    (< NOT >)? (< BLOCKED_P > | < FACING_P > | < CAN_PUT_P > | < CAN_PICK_P > | < CAN_MOVE_P >)?
+	  )
 	}
 	
 	void if_conditional():
 	{}
 	{
-	  < IF > "(" conditional() ")" (block())+
+	  (	    < IF > "(" conditional() ")" (auxiliar())+
+	  )
 	}
 
 	void loop_conditional():
 	{}
 	{
-	  < LOOP > "(" conditional() ")" (block())+
+	  (	    < LOOP > "(" conditional() ")" (auxiliar())+
+	  )
 	}
 
 	void repeat():
-	{}
 	{
-	  < REPEAT > < NUMERO > (block())+
+	  int x;
+	  String name;
+	}
+	{
+	  (	    < REPEAT > (x=numero() | name=< WORD >.image {x=variables.get(name);}) (auxiliar())+
+	  )
 	}
 
 	void defun():
-	{}
 	{
-	  < DEFUN > < WORD > "(" (< WORD > | < NUMERO >)* ")" (block())+
+	  String name;
+	}
+	{
+	  (	    < DEFUN > name=< WORD >.image "(" (< WORD > | < NUMERO >)* ")" (auxiliar())+ {metodos.add(name);}
+	  )
 	}
 	
 	void put() :
 	{
-		int f=1;	
+		int f=1;
+		String name;	
 	}
 	{
 	  (
-	    ( <T_CHIPS> f=numero() {world.putChips(f); salida = "Command:  Put Chips"; })
-	  | ( <T_BALLOONS> f=numero() {world.putBalloons(f); salida = "Command:  Put Balloons";})
+	    ( <T_CHIPS> (f=numero() {world.putChips(f); salida = "Command: Put Chips";} | name=< WORD >.image {try {f=variables.get(name);world.putChips(f);salida = "Command: Put Chips";} catch (Exception e) {salida = "Esta variable no se encuentra definida";}}))
+	  | ( <T_BALLOONS> (f=numero() {world.putBalloons(f); salida = "Command: Put Balloons";} | name=< WORD >.image {try {f=variables.get(name);world.putBalloons(f); salida = "Command: Put Balloons";} catch (Exception e) {salida = "Esta variable no se encuentra definida";}}))
 	  )
 	}
 
 	void pick():
 	{
-		int f=1;	
+		int f=1;
+		String name;
 	}
 	{
 	  (
-	    ( <T_CHIPS> f=numero() {world.pickChips(f);salida = "Command:  Pick chips";})
-	  | ( <T_BALLOONS> f=numero() {world.grabBalloons(f);salida="Command:  Pick balloons";})
+	    ( <T_CHIPS> (f=numero() {world.pickChips(f);salida = "Command: Pick chips";} | name=< WORD >.image {try {f=variables.get(name);world.pickChips(f);salida = "Command: Pick chips";} catch (Exception e) {salida = "Esta variable no se encuentra definida";}}))
+	  | ( <T_BALLOONS> (f=numero() {world.grabBalloons(f);salida="Command:  Pick balloons";} | name=< WORD >.image {try {f=variables.get(name);world.grabBalloons(f);salida="Command:  Pick balloons";} catch (Exception e) {salida = "Esta variable no se encuentra definida";}}))
 	  )
 	}
 
@@ -218,5 +245,3 @@ TOKEN:
 			return total;
 		}
 	}
-
-	

@@ -39,7 +39,7 @@ public interface RobotConstants {
   /** RegularExpression Id. */
   int FACE = 18;
   /** RegularExpression Id. */
-  int GO_END = 19;
+  int EQUALS = 19;
   /** RegularExpression Id. */
   int MOVE_DIR = 20;
   /** RegularExpression Id. */
@@ -97,7 +97,7 @@ public interface RobotConstants {
     "\"defun\"",
     "\"turn\"",
     "\"face\"",
-    "\"goend\"",
+    "\"=\"",
     "\"move-dir\"",
     "\"run-dirs\"",
     "\"move_face\"",

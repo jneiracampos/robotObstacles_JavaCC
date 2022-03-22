@@ -20,7 +20,7 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0)
    switch (pos)
    {
       case 0:
-         if ((active0 & 0x875b8be0L) != 0L)
+         if ((active0 & 0x87538be0L) != 0L)
          {
             jjmatchedKind = 33;
             return 39;
@@ -63,7 +63,7 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0)
             jjmatchedPos = 1;
             return 29;
          }
-         if ((active0 & 0x8fffb7e0L) != 0L)
+         if ((active0 & 0x8ff7b7e0L) != 0L)
          {
             jjmatchedKind = 33;
             jjmatchedPos = 1;
@@ -79,7 +79,7 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0)
             return 39;
          return -1;
       case 2:
-         if ((active0 & 0xcfffb560L) != 0L)
+         if ((active0 & 0xcff7b560L) != 0L)
          {
             jjmatchedKind = 33;
             jjmatchedPos = 2;
@@ -100,7 +100,7 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0)
          }
          if ((active0 & 0x561560L) != 0L)
             return 39;
-         if ((active0 & 0xc889a000L) != 0L)
+         if ((active0 & 0xc881a000L) != 0L)
          {
             if (jjmatchedPos != 3)
             {
@@ -126,7 +126,7 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0)
             }
             return -1;
          }
-         if ((active0 & 0x80090000L) != 0L)
+         if ((active0 & 0x80010000L) != 0L)
             return 39;
          return -1;
       case 5:
@@ -257,6 +257,8 @@ private int jjMoveStringLiteralDfa0_0()
          return jjStopAtPos(0, 37);
       case 58:
          return jjStopAtPos(0, 38);
+      case 61:
+         return jjStopAtPos(0, 19);
       case 66:
       case 98:
          return jjMoveStringLiteralDfa1_0(0x48000000L);
@@ -269,9 +271,6 @@ private int jjMoveStringLiteralDfa0_0()
       case 70:
       case 102:
          return jjMoveStringLiteralDfa1_0(0x840000L);
-      case 71:
-      case 103:
-         return jjMoveStringLiteralDfa1_0(0x80000L);
       case 73:
       case 105:
          return jjMoveStringLiteralDfa1_0(0x800L);
@@ -334,7 +333,7 @@ private int jjMoveStringLiteralDfa1_0(long active0)
          return jjMoveStringLiteralDfa2_0(active0, 0x8000000L);
       case 79:
       case 111:
-         return jjMoveStringLiteralDfa2_0(active0, 0x585220L);
+         return jjMoveStringLiteralDfa2_0(active0, 0x505220L);
       case 85:
       case 117:
          return jjMoveStringLiteralDfa2_0(active0, 0x2200c0L);
@@ -357,9 +356,6 @@ private int jjMoveStringLiteralDfa2_0(long old0, long active0)
       case 67:
       case 99:
          return jjMoveStringLiteralDfa3_0(active0, 0x840100L);
-      case 69:
-      case 101:
-         return jjMoveStringLiteralDfa3_0(active0, 0x80000L);
       case 70:
       case 102:
          return jjMoveStringLiteralDfa3_0(active0, 0x18000L);
@@ -442,7 +438,7 @@ private int jjMoveStringLiteralDfa3_0(long old0, long active0)
             jjmatchedKind = 17;
             jjmatchedPos = 3;
          }
-         return jjMoveStringLiteralDfa4_0(active0, 0x80040L);
+         return jjMoveStringLiteralDfa4_0(active0, 0x40L);
       case 80:
       case 112:
          if ((active0 & 0x400L) != 0L)
@@ -481,8 +477,6 @@ private int jjMoveStringLiteralDfa4_0(long old0, long active0)
          return jjMoveStringLiteralDfa5_0(active0, 0xa000L);
       case 68:
       case 100:
-         if ((active0 & 0x80000L) != 0L)
-            return jjStartNfaWithStates_0(4, 19, 39);
          return jjMoveStringLiteralDfa5_0(active0, 0x200000L);
       case 75:
       case 107:
@@ -1016,7 +1010,7 @@ static final int[] jjnextStates = {
 /** Token literal values. */
 public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, null, null, null, null, null, null, null, null, 
-null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+null, null, null, null, null, null, "\75", null, null, null, null, null, null, null, 
 null, null, null, null, null, null, null, null, null, "\50", "\51", "\72", };
 
 /** Lexer state names. */

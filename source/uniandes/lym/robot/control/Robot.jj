@@ -1,3 +1,6 @@
+// Este codigo fue editado por Juan Camilo Neira Campos 201922746: sección 2. Valentina Calderón Molina 202020771: Sección 1. 
+
+
 options 
 {
 	LOOKAHEAD=1; 
@@ -106,7 +109,8 @@ TOKEN:
 	void block():
 	{}
 	{
-	  (	    ("(")+ (one_line() | if_conditional() | loop_conditional() | repeat() | defun() | conditional()) (")")+
+	  (
+	    ("(")+ (one_line() | if_conditional() | loop_conditional() | repeat() | defun() | conditional()) (")")+
 	  )
 	}
 
